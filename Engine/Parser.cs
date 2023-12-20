@@ -83,6 +83,7 @@ namespace HULK
                 expression = ParseIfElseState(savedToken, start, stop);
             }
 
+            expression ??=TryEqual(savedToken,start,stop);
             expression ??= TrySumOrSub(savedToken, start, stop);
             expression ??= TryProdDivMod(savedToken, start, stop);
             expression ??= Unary(savedToken, start, stop);
@@ -707,6 +708,30 @@ namespace HULK
             return null;
         }
 
+        private Expression TryEqual(string[] savedToken, int start, int stop)
+        {
+            for(int i = stop; i>=start; i--)
+            {
+                switch(savedToken[i])
+                {
+                    case ")":
+                    {
+                        i=Tokenizer.ClosedBalance(i,start,savedToken);
+                        break;
+                    }
+                    case "==":
+                    {
+                        return CompoundFunctionCall(savedToken,start,stop,i,typeof(Equal));
+                    }
+                    case "!=":
+                    {
+                        return CompoundFunctionCall(savedToken,start,stop,i,typeof(Unequal));
+                    }
+                }
+            }
+            return null;
+        }
+
         private Expression ParseIfElseState(string[] savedToken, int start, int stop)
         {
             Expression result;
@@ -750,6 +775,8 @@ namespace HULK
             }
             return result;
         }
+
+        //Declaracion del If-Else como funcion
         public class IfElseState : Expression
         {
             public Expression Condition { get; protected set; }
@@ -804,7 +831,8 @@ namespace HULK
                 }
             }
         }
-
+ 
+        //Declaracion del Let-in como funcion
         public class LetInState : Expression
         {
             public Dictionary<string, CastedVariablesTreatment> SavedVariables { get; private set; }

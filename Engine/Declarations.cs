@@ -5,6 +5,7 @@ using System.Data;
 
 namespace HULK
 {
+    //Declaracion de la creacion y comprobacion de variables
     public class Variable : Expression
     {
         public Types Type {get; private set;}
@@ -107,6 +108,7 @@ namespace HULK
         }
     }
 
+    //Declaracion de la creacion y comprobacion de funciones
     public class FunctionDeclaration : Expression
     {
         public Dictionary<string, CastedVariablesTreatment> Index {get; private set;}
@@ -194,7 +196,8 @@ namespace HULK
 
             }
         }
-
+          
+        //Guardar las funciones creadas y comprobarlas
         public void History(SavedHistory Saved )
         {
             Saved.AddNewFunction(this.FunctionId, this);
@@ -207,6 +210,7 @@ namespace HULK
 
     }
 
+    //Declaracion de todos los comandos de uso comun en el compilador
     public static class Internal
     {
         public static string[] MainUse = { "let", "in", "else", "if", "function", "+", "-", "*", "/", "&&", "&", "|", "||", "(", ")", "=", ",","=>"};

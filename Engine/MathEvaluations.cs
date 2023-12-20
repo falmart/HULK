@@ -109,6 +109,7 @@ namespace HULK
         }
     }
 
+    //Funcion valor en positivo
     public class Positive : SampleFunctions
     {
         public Positive(Expression arg) : base(arg)
@@ -127,6 +128,7 @@ namespace HULK
         }
     }
 
+    //Funcion valor en negativo
     public class Negative : SampleFunctions
     {
         public Negative(Expression arg) : base(arg)
@@ -404,6 +406,7 @@ namespace HULK
         }
     }
 
+    //Funcion menor que
     public class Lower : CompoundFunction
     {
         public Lower(Expression leftIndex, Expression rightIndex) : base(leftIndex,rightIndex)
@@ -425,6 +428,7 @@ namespace HULK
         }
     }
 
+    //Funcion menor igual
     public class LowerEqual : CompoundFunction
     {
         public LowerEqual(Expression leftIndex, Expression rightIndex) : base(leftIndex,rightIndex)
@@ -446,6 +450,7 @@ namespace HULK
         }
     }
 
+    //Funcion mayor que
     public class Greater : CompoundFunction
     {
         public Greater(Expression leftIndex, Expression rightIndex) : base(leftIndex, rightIndex)
@@ -466,6 +471,7 @@ namespace HULK
         }
     }
 
+    //Funcion mayor igual
     public class GreaterEqual : CompoundFunction
     {
         public GreaterEqual (Expression leftIndex,Expression rightIndex) : base(leftIndex,rightIndex)
@@ -487,6 +493,45 @@ namespace HULK
         }
     }
 
+    //Funcion de igualdad
+    public class Equal : CompoundFunction
+    {
+        public Equal(Expression leftIndex, Expression rightIndex) : base(leftIndex,rightIndex)
+        {}
+        public override object Evaluate(object left, object right)
+        {
+            try
+            {
+                return(dynamic) left == (dynamic)right;
+            }
+            catch(RuntimeBinderException ex)
+            {
+                string exe = ex.Message;
+                throw new TypicalError(exe);
+            }
+        }
+    }
+
+    //Funcion de desigualdad
+    public class Unequal : CompoundFunction
+    {
+        public Unequal(Expression leftIndex, Expression rightIndex) : base (leftIndex,rightIndex)
+        {}
+        public override object Evaluate(object left, object right)
+        {
+            try
+            {
+                return (dynamic) left != (dynamic)right;
+            }
+            catch (RuntimeBinderException ex)
+            {
+                string exe = ex.Message;
+                throw new TypicalError(exe);
+            }
+        }
+    }
+
+    //Concatenar strings
     public class Conc : CompoundFunction
     {
         public Conc(Expression leftArgument, Expression rightArgument) : base(leftArgument, rightArgument)

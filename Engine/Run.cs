@@ -18,6 +18,10 @@ namespace HULK
         {
             string[] savedInput = Tokenizer.MakeTokens(userinput);
             List<string[]> Steps;
+            if(savedInput.Length==0)
+            {
+                return;
+            }
             try
             {
                 Steps=Tokenizer.GetAndSave(savedInput);

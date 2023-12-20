@@ -41,7 +41,8 @@ namespace HULK
             }                      
             return Tokens;
         }
-
+        
+        //Para buscar las estruccturas de los comandos (let-in, if else, etc)
         public static int GetName(string[] tokens, int start, int stop, string limit)
         {
             int result = start;
@@ -52,8 +53,9 @@ namespace HULK
                     i=OpenBalance(i,stop,tokens);
                     result=i;
                 }
-                if(tokens[i+1] == limit)
+                if(tokens[i] == limit)
                 {
+                    result--;
                     break;
                 }
                 result++;
